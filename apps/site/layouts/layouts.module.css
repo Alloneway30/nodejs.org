@@ -1,77 +1,12 @@
+@reference "../styles/index.css";
+
 .baseLayout {
-  @apply grid
+  @apply ml:grid
+    ml:grid-cols-[1fr]
+    ml:grid-rows-[auto_1fr_auto]
     h-max
     min-h-full
-    w-full
-    grid-cols-[1fr]
-    grid-rows-[auto_1fr_auto];
-}
-
-.articleLayout {
-  @apply max-w-8xl
-    sm:grid-areas-[sidebar_main,sidebar_footer]
-    lg:grid-areas-[sidebar_main_metabar,sidebar_footer_metabar]
-    mx-auto
-    block
-    w-full
-    overflow-auto
-    sm:grid
-    sm:grid-cols-[theme(spacing.52)_1fr]
-    sm:grid-rows-[1fr]
-    sm:overflow-visible
-    md:grid-cols-[theme(spacing.64)_1fr]
-    lg:grid-cols-[theme(spacing.52)_1fr_theme(spacing.52)]
-    xl:grid-cols-[theme(spacing.80)_1fr_theme(spacing.80)];
-
-  > *:nth-child(1) {
-    @apply grid-in-[sidebar];
-  }
-
-  > *:nth-child(2) {
-    @apply contents
-      overflow-y-scroll
-      sm:max-lg:block;
-
-    > *:first-child {
-      @apply grid-in-[main]
-        sm:bg-gradient-subtle
-        sm:dark:bg-gradient-subtle-dark
-        xl:px-18
-        overflow-y-auto
-        overflow-x-hidden
-        p-4
-        motion-safe:scroll-smooth
-        sm:bg-fixed
-        sm:p-12;
-    }
-
-    > *:last-child {
-      @apply grid-in-[metabar]
-        mt-8
-        border-t
-        sm:mt-0
-        lg:max-w-xs
-        lg:border-l
-        lg:border-t-0;
-    }
-  }
-
-  > *:nth-child(3) {
-    @apply grid-in-[footer]
-      sticky
-      bottom-0
-      flex
-      w-full
-      flex-col
-      items-center
-      self-stretch
-      border-t
-      border-t-neutral-200
-      bg-white
-      py-4
-      dark:border-t-neutral-900
-      dark:bg-neutral-950;
-  }
+    w-full;
 }
 
 .centeredLayout {
@@ -101,7 +36,7 @@
   section {
     &:nth-of-type(1) {
       @apply flex
-        max-w-[500px]
+        max-w-[400px]
         flex-[1_0]
         flex-col
         gap-8;
@@ -118,10 +53,10 @@
         }
 
         small {
-          @apply max-xs:text-xs
+          @apply max-ml:text-xs
             text-center
             text-sm
-            text-neutral-800
+            text-neutral-600
             dark:text-neutral-400;
 
           sup {
@@ -133,14 +68,14 @@
 
     &:nth-of-type(2) {
       @apply flex
-          min-w-0
-          max-w-full
-          flex-[1_1]
-          flex-col
-          items-center
-          gap-4
-          md:max-w-2xl
-          lg:max-w-3xl;
+        max-w-full
+        min-w-0
+        flex-[1_1]
+        flex-col
+        items-center
+        gap-4
+        md:max-w-2xl
+        lg:max-w-3xl;
 
       > div {
         @apply w-full
@@ -150,9 +85,9 @@
 
       > p {
         @apply text-center
-            text-sm
-            text-neutral-800
-            dark:text-neutral-200;
+          text-sm
+          text-neutral-800
+          dark:text-neutral-200;
       }
     }
   }
@@ -162,14 +97,14 @@
 .downloadLayout {
   @apply bg-gradient-subtle
     dark:bg-gradient-subtle-dark
-    max-xs:bg-none
-    max-xs:dark:bg-none
+    max-ml:bg-none
+    max-ml:dark:bg-none
     flex
     w-full
     justify-center;
 
   main {
-    @apply max-w-5xl
+    @apply max-w-7xl
       gap-4
       px-4
       py-12
@@ -179,7 +114,7 @@
 }
 
 .downloadLayout {
-  section:nth-last-child(1) {
+  section:nth-last-child(3) {
     @apply flex
       flex-col
       gap-2;
@@ -189,7 +124,7 @@
     }
   }
 
-  section:nth-last-child(2) p {
+  section:nth-last-child(4) p {
     @apply flex
       flex-row
       flex-wrap
@@ -200,23 +135,25 @@
 }
 
 .contentLayout {
-  @apply max-w-8xl
-    max-xs:m-0
-    max-xs:block
+  @apply max-w-10xl
+    max-ml:m-0
+    3xl:grid-cols-[--spacing(80)_1fr_--spacing(80)]
+    ml:grid-cols-[0_1fr_--spacing(56)]
+    ml:grid
     mx-auto
-    grid
+    block
     w-full
     grid-rows-[1fr]
-    sm:grid-cols-[1fr_theme(spacing.52)]
-    xl:grid-cols-[1fr_theme(spacing.80)];
+    xl:grid-cols-[--spacing(56)_1fr_--spacing(64)]
+    2xl:grid-cols-[--spacing(72)_1fr_--spacing(72)];
 
-  > *:nth-child(1) {
+  > *:nth-child(2) {
     @apply bg-gradient-subtle
       dark:bg-gradient-subtle-dark
-      max-xs:border-l-0
-      max-xs:bg-none
-      max-xs:pb-4
-      max-xs:dark:bg-none
+      max-ml:border-l-0
+      max-ml:bg-none
+      max-ml:pb-4
+      max-ml:dark:bg-none
       flex
       w-full
       justify-center
@@ -229,17 +166,16 @@
       dark:border-l-neutral-900;
 
     main {
-      @apply max-w-[660px]
-        gap-4
-        [overflow-wrap:_anywhere];
+      @apply gap-4
+        wrap-anywhere;
     }
   }
 
-  > *:nth-child(2) {
-    @apply xs:mt-0
-      xs:max-w-xs
-      xs:border-l
-      xs:border-t-0
+  > *:nth-child(3) {
+    @apply ml:mt-0
+      ml:max-w-xs
+      ml:border-l
+      ml:border-t-0
       mt-8
       border-t;
   }
@@ -255,8 +191,8 @@
     }
 
     > div:nth-of-type(1) {
-      @apply mb-4
-        mt-2;
+      @apply mt-2
+        mb-4;
     }
   }
 }

@@ -18,9 +18,11 @@ defaults:
     # This ensures that the working directory is the root of the repository
     working-directory: ./
 
-permissions:
-  # This permission is required by `actions-ecosystem/action-remove-label`
-  pull-requests: write
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   # This Job removes the `github_actions:pull-request` label after it got applied
@@ -29,9 +31,12 @@ jobs:
   remove_pull_request_label:
     name: Remove Pull Request Label
     runs-on: ubuntu-latest
+    permissions:
+      # Required by `actions-ecosystem/action-remove-label` to remove labels
+      pull-requests: write
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
 

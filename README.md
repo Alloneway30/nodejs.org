@@ -30,29 +30,26 @@
   <a title="scorecard" href="https://securityscorecards.dev/viewer/?uri=github.com/nodejs/nodejs.org">
     <img src="https://api.securityscorecards.dev/projects/github.com/nodejs/nodejs.org/badge" alt="nodejs.org scorecard badge" />
   </a>
-  <a href="http://commitizen.github.io/cz-cli/" alt="Commitizen friendly">
-    <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg">
-  </a>
   <br />
   <br />
 </p>
 
 ## What is this repo?
 
-[Nodejs.org](https://nodejs.org/) by the [OpenJS Foundation](https://openjsf.org/) is the official website for the Node.js® JavaScript runtime. This repo is the source code for the website. It is built using [Next.js](https://nextjs.org), a React Framework.
+[Nodejs.org](https://nodejs.org/), maintained by the [OpenJS Foundation](https://openjsf.org/), is the official website for the Node.js® JavaScript runtime. This repo is the source code for the website. It is built using [Next.js](https://nextjs.org), a React Framework.
 
 ```bash
-npm ci
-npx turbo dev
+pnpm install --frozen-lockfile
+pnpm dev
 
-# listening at localhost:3000
+# Listening at http://localhost:3000
 ```
 
 ## Contributing
 
 This project adopts the Node.js [Code of Conduct][].
 
-Any person who wants to contribute to the Website is welcome! Please read [Contribution Guidelines][] and see the [Figma Design][] to understand better the structure of this repository.
+Anyone who wants to contribute to the website is welcome! Please read [Contribution Guidelines][] and see the [Figma Design][] to understand better the structure of this repository.
 
 > \[!IMPORTANT]\
 > Please read our [Translation Guidelines][] before contributing to Translation and Localization of the Website
@@ -83,11 +80,10 @@ This repository does not contain the codebase or related infrastructure that ser
 
 These are maintained in different repositories and we urge users to open **issues in their respective repositories**, for bug reports, feature requests or any matter related to these endpoints.
 
-- [`release-cloudflare-worker`](https://github.com/nodejs/release-cloudflare-worker): The codebase responsible for serving the Node.js Distribution Binaries, API Docs and any other assets from the links mentioned above.
+- [`release-cloudflare-worker`](https://github.com/nodejs/release-cloudflare-worker): The codebase responsible for serving the Node.js Distribution Binaries, API docs and any other assets from the links mentioned above.
   - We use Cloudflare R2 Buckets for storing our Assets and Cloudflare Workers for serving these Assets to the Web.
 - [`node/doc/api`](https://github.com/nodejs/node/tree/main/doc/api): The source code of our API docs, it contains all the Node.js API Documentation Markdown files
-  - [`node/doc`](https://github.com/nodejs/node/tree/main/doc) contains the HTML templates, CSS styles and JavaScript code that runs on the client-side of our API Docs generated pages.
-  - [`node/tools/doc`](https://github.com/nodejs/node/tree/main/tools/doc) contains the tooling that validates, lints, builds and compiles our API Docs. Also responsible for generating what you see when accessing `https://nodejs.org/api/`.
+- [`doc-kit`](https://github.com/nodejs/doc-kit): The tooling that builds and compiles our API docs. Also responsible for generating what you see when accessing `https://nodejs.org/api/`.
 
 ## Relevant Links
 
@@ -96,6 +92,8 @@ These are maintained in different repositories and we urge users to open **issue
 [Contribution Guidelines][]
 
 [Collaborator Guide][]
+
+[Governance Document][]
 
 [Figma Design][]
 
@@ -116,12 +114,14 @@ These are maintained in different repositories and we urge users to open **issue
   - A really warm thank you to Cloudflare as we would not be able to serve our community without their immense support.
 - Thanks to [Sentry](https://sentry.io/welcome/) for providing an open source license for their error reporting, monitoring and diagnostic tools.
 - Thanks to [Crowdin](https://crowdin.com/) for providing a platform that allows us to localize the Node.js Website and collaborate with translators.
-- Thanks to [Orama](https://docs.oramasearch.com/) for providing a search platform that indexes our expansive content and provides lightning-fast results for our users.
+- Thanks to [Orama](https://docs.orama.com/) for providing a search platform that indexes our expansive content and provides lightning-fast results for our users.
+- Thanks to [DigitalOcean](https://www.digitalocean.com/) for generously providing Node.js with credits as part of their open source program.
 
 [code of conduct]: https://github.com/nodejs/admin/blob/main/CODE_OF_CONDUCT.md
 [contribution guidelines]: https://github.com/nodejs/nodejs.org/blob/main/CONTRIBUTING.md
-[content vs code]: https://github.com/nodejs/nodejs.org/blob/main/CONTENT_VS_CODE.md
-[dependency pinning]: https://github.com/nodejs/nodejs.org/blob/main/DEPENDENCY_PINNING.md
-[collaborator guide]: https://github.com/nodejs/nodejs.org/blob/main/COLLABORATOR_GUIDE.md
-[figma design]: https://www.figma.com/file/pu1vZPqNIM7BePd6W8APA5/Node.js
-[translation guidelines]: https://github.com/nodejs/nodejs.org/blob/main/TRANSLATION.md
+[content vs code]: https://github.com/nodejs/nodejs.org/blob/main/docs/content-vs-code.md
+[dependency pinning]: https://github.com/nodejs/nodejs.org/blob/main/docs/dependency-pinning.md
+[collaborator guide]: https://github.com/nodejs/nodejs.org/blob/main/docs/collaborator-guide.md
+[governance document]: https://github.com/nodejs/web-team/blob/main/GOVERNANCE.md
+[figma design]: https://www.figma.com/file/a10cjjw3MzvRQMPT9FP3xz
+[translation guidelines]: https://github.com/nodejs/nodejs.org/blob/main/docs/translation.md

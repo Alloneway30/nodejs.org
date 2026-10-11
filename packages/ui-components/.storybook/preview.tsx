@@ -1,0 +1,40 @@
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
+
+import type { Preview, ReactRenderer } from '@storybook/react-webpack5';
+
+import { STORYBOOK_MODES, STORYBOOK_SIZES } from './constants';
+
+import '#ui/styles/index.css';
+
+const preview: Preview = {
+  parameters: {
+    chromatic: { modes: STORYBOOK_MODES },
+    viewport: {
+      options: STORYBOOK_SIZES,
+    },
+    // Runs axe-core against every Story and reports WCAG violations in the
+    // Accessibility panel. 'todo' surfaces them as warnings instead of failures
+    // @see https://storybook.js.org/docs/writing-tests/accessibility-testing
+    a11y: { test: 'todo' },
+  },
+
+  decorators: [
+    withThemeByDataAttribute<ReactRenderer>({
+      themes: { light: 'light', dark: 'dark' },
+      defaultTheme: 'light',
+      attributeName: 'data-theme',
+    }),
+    // TODO(@avivkeller): Once storybook fixes their types
+    // this can be removed, since `withThemeByDataAttribute`
+    // will return the same type that is accepted by `Preview`
+  ] as Preview['decorators'],
+
+  initialGlobals: {
+    viewport: {
+      value: 'large',
+      isRotated: false,
+    },
+  },
+};
+
+export default preview;

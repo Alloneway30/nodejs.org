@@ -1,16 +1,22 @@
+import { getClientContext } from '#site/client-context';
+import CrossLink from '#site/components/Common/CrossLink';
+import { getBlogData } from '#site/util/blog';
+
+import type { BlogCategory } from '#site/types';
 import type { FC } from 'react';
 
-import { getClientContext } from '@/client-context';
-import CrossLink from '@/components/Common/CrossLink';
-import getBlogData from '@/next-data/blogData';
-
-const WithBlogCrossLinks: FC = async () => {
+const WithBlogCrossLinks: FC = () => {
   const { pathname } = getClientContext();
 
   // Extracts from the static URL the components used for the Blog Post slug
-  const [, , category, postname] = pathname.split('/');
+  const [, , category, postname] = pathname.split('/') as [
+    unknown,
+    unknown,
+    BlogCategory,
+    string,
+  ];
 
-  const { posts } = await getBlogData(category);
+  const { posts } = getBlogData(category);
 
   const currentItem = posts.findIndex(
     ({ slug }) => slug === `/blog/${category}/${postname}`
@@ -22,7 +28,7 @@ const WithBlogCrossLinks: FC = async () => {
   ];
 
   return (
-    <div className="max-xs:grid-cols-1 mt-4 grid w-full grid-cols-2 gap-4">
+    <div className="max-ml:grid-cols-1 mt-4 grid w-full grid-cols-2 gap-4">
       {(previousCrossLink && (
         <CrossLink
           type="previous"

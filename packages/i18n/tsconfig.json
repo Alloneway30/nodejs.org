@@ -8,14 +8,13 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "paths": { "@/*": ["./*"] },
     "baseUrl": ".",
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "."
   },
-  "include": ["lib", "types.d.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src"]
 }

@@ -1,23 +1,18 @@
-import type { FC, PropsWithChildren } from 'react';
+import { getLanguageDisplayName } from '@node-core/rehype-shiki';
 
-import CodeBox from '@/components/Common/CodeBox';
-import { getLanguageDisplayName } from '@/util/getLanguageDisplayName';
+import CodeBox from '#site/components/Common/CodeBox';
 
-type CodeBoxProps = { className?: string; showCopyButton?: string };
+import type { FC, HTMLAttributes } from 'react';
 
-const MDXCodeBox: FC<PropsWithChildren<CodeBoxProps>> = ({
+const MDXCodeBox: FC<HTMLAttributes<HTMLElement>> = ({
   children: code,
   className,
-  showCopyButton,
 }) => {
-  const matches = className?.match(/language-(?<language>.*)/);
+  const matches = className?.match(/language-(?<language>[a-zA-Z]+)/);
   const language = matches?.groups?.language ?? '';
 
   return (
-    <CodeBox
-      language={getLanguageDisplayName(language)}
-      showCopyButton={showCopyButton ? showCopyButton === 'true' : undefined}
-    >
+    <CodeBox language={getLanguageDisplayName(language)} className={className}>
       {code}
     </CodeBox>
   );

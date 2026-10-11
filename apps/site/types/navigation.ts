@@ -1,35 +1,38 @@
+import type { IntlMessageKeys } from './i18n';
 import type { HTMLAttributeAnchorTarget } from 'react';
 
-export interface FooterConfig {
-  text: string;
+export type FooterConfig = {
+  text: IntlMessageKeys;
   link: string;
-}
+};
 
-export interface SocialConfig {
+export type SocialConfig = {
   icon: string;
   link: string;
   alt?: string;
-}
+};
 
 export type NavigationKeys =
   | 'about'
   | 'download'
   | 'docs'
+  | 'betaDocs'
   | 'getInvolved'
   | 'certification'
   | 'learn'
   | 'blog';
 
-export interface NavigationEntry {
-  label?: string;
+export type NavigationEntry = {
+  label?: IntlMessageKeys;
   link?: string;
   items?: Record<string, NavigationEntry>;
   target?: HTMLAttributeAnchorTarget | undefined;
-}
+  accent?: boolean;
+};
 
-export interface SiteNavigation {
+export type SiteNavigation = {
   topNavigation: Record<NavigationKeys, NavigationEntry>;
   footerLinks: Array<FooterConfig>;
   socialLinks: Array<SocialConfig>;
   sideNavigation: Record<NavigationKeys, NavigationEntry>;
-}
+};

@@ -5,7 +5,7 @@ title: Установка Node.js через менеджер пакетів
 
 # Установка Node.js через менеджери пакетів
 
-> Пакети на цій сторінці обслуговуються та підтримуються їхніми відповідними розробниками, **не** командою Node.js. Будь ласка, повідомляйте про проблеми цих пакетів їхнім розробникам. Якщо виявиться, що проблема є помилкою Node.js, то вони повідомлять нас про неї.
+> Пакети на цій сторінці супроводжуються та підтримуються їхніми відповідними розробниками, **не** командою Node.js. Будь ласка, повідомляйте про проблеми цих пакетів їхнім розробникам. Якщо виявиться, що проблема є помилкою Node.js, то вони повідомлять нас про неї.
 
 ## Alpine Linux
 
@@ -43,7 +43,21 @@ pacman -S nodejs npm
 
 ## CentOS, Fedora та Red Hat Enterprise Linux
 
-Node.js доступний як модуль із назвою `nodejs` у CentOS/RHEL 8 та Fedora.
+Node.js та пакети npm доступні в головному репозиторії для Fedora та RHEL 10.
+
+Його можна встановити зі стандартного потоку, який містить версію Node.js на стадії Active LTS.
+
+```bash
+dnf install nodejs npm
+```
+
+Або з іншого потоку для альтернативних підтримуваних версій (підтримувані версії можуть відрізнятися між Fedora та різними релізами RHEL).
+
+```bash
+dnf install nodejs24
+```
+
+Для старіших релізів для CentOS чи RHEL Node.js доступний як модуль із назвою `nodejs`.
 
 ```bash
 dnf module install nodejs:<stream>
@@ -66,8 +80,8 @@ dnf module install nodejs:18/common
 
 Ці ресурси надають пакети, які сумісні з CentOS, Fedora та RHEL.
 
-- [Snaps Node.js](#snap) обслуговуються та підтримуються на https://github.com/nodejs/snap
-- [Бінарні дистрибутиви Node.js](#debian-and-ubuntu-based-linux-distributions) обслуговуються та підтримуються [NodeSource](https://github.com/nodesource/distributions)
+- [Snaps Node.js](#snap) супроводжуються та підтримуються на https://github.com/nodejs/snap
+- [Бінарні дистрибутиви Node.js](#debian-and-ubuntu-based-linux-distributions) супроводжуються та підтримуються [NodeSource](https://github.com/nodesource/distributions)
 
 ## Дистрибутиви Linux на базі Debian та Ubuntu
 
@@ -341,7 +355,7 @@ sudo eopkg install nodejs
 
 Підтримує всі популярні оболонки (Bash, Zsh, Fish, PowerShell, Clink, Cmder).
 
-Перегляньте [швидкий старт](https://vfox.lhan.me/guides/quick-start.html), щоб почати використовувати vfox та дізнатися всі деталі його використання.
+Перегляньте [швидкий старт](https://vfox.dev/guides/quick-start.html), щоб почати використовувати vfox та дізнатися всі деталі його використання.
 
 ## Void Linux
 

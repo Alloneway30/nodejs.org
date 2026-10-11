@@ -1,26 +1,22 @@
-import { importLocale } from '@node-core/website-i18n';
+import { availableLocaleCodes, defaultLocale } from '@node-core/website-i18n';
+import defaultMessages from '@node-core/website-i18n/locales/en.json';
+import { locale as getRootLocale } from 'next/root-params';
 import { getRequestConfig } from 'next-intl/server';
 
-import { availableLocaleCodes } from '@/next.locales.mjs';
-
-import deepMerge from './util/deepMerge';
+import { deepMerge } from './util/objects';
 
 // Loads the Application Locales/Translations Dynamically
 const loadLocaleDictionary = async (locale: string) => {
-  // This enables HMR on the English Locale, so that instant refresh
-  // happens while we add/change texts on the source locale
-  const defaultMessages = await import(
-    '@node-core/website-i18n/locales/en.json'
-  ).then(f => f.default);
-
-  if (locale === 'en') {
+  if (locale === defaultLocale.code) {
     return defaultMessages;
   }
 
   if (availableLocaleCodes.includes(locale)) {
-    // Other languages don't really require HMR as they will never be development languages
-    // so we can load them dynamically
-    const messages = await importLocale(locale);
+    // Other languages don't really require HMR as they
+    // will never be development languages so we can load them dynamically
+    const { default: messages } = await import(
+      `@node-core/website-i18n/locales/${locale}.json`
+    );
 
     // Use default messages as fallback
     return deepMerge(defaultMessages, messages);
@@ -30,9 +26,21 @@ const loadLocaleDictionary = async (locale: string) => {
 };
 
 // Provides `next-intl` configuration for RSC/SSR
-export default getRequestConfig(async ({ locale }) => ({
-  // This is the dictionary of messages to be loaded
-  messages: await loadLocaleDictionary(locale),
-  // We always define the App timezone as UTC
-  timeZone: 'Etc/UTC',
-}));
+export default getRequestConfig(async params => {
+  // An explicit locale passed to an awaitable API like `getTranslations({ locale })`
+  // wins, otherwise we read the `[locale]` segment of the root layout
+  let locale = params.locale ?? (await getRootLocale());
+
+  // Ensure that the incoming locale is valid
+  if (!locale || !availableLocaleCodes.includes(locale)) {
+    locale = defaultLocale.code;
+  }
+
+  return {
+    locale,
+    // This is the dictionary of messages to be loaded
+    messages: await loadLocaleDictionary(locale),
+    // We always define the App timezone as UTC
+    timeZone: 'Etc/UTC',
+  };
+});

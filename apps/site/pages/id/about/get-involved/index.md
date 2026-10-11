@@ -1,26 +1,35 @@
 ---
-title: Mari terlibat
+title: Mari Berpartisipasi
 layout: about
 ---
 
 # Mari Berpartisipasi
 
+Jika kamu tertarik untuk terlibat dengan komunitas Node.js, ada banyak cara untuk melakukannya. Proyek Node.js adalah komunitas yang besar dan beragam, dengan banyak cara untuk berkontribusi, selain hanya menulis kode.
+
 ## Diskusi Komunitas
 
-- [Daftar masalah GitHub](https://github.com/nodejs/node/issues) adalah tempat untuk berdiskusi tentang fitur inti Node.js.
-- Untuk obrolan waktu nyata tentang pengembangan Node.js, gunakan salah satu platform di bawah ini
-  - Untuk IRC, buka `irc.libera.chat` di saluran `#node.js` dengan [klien IRC](https://en.wikipedia.org/wiki/Comparison_of_Internet_Relay_Chat_clients) atau sambungkan di browser web Anda ke saluran menggunakan [klien web](https://kiwiirc.com/nextclient/)
-  - Untuk Slack, ada dua opsi:
-    - [OpenJSF Slack](https://slack-invite.openjsf.org/) adalah Slack yang dijalankan oleh Foundation dengan beberapa saluran Node.js (saluran yang diawali dengan `#nodejs-` terkait dengan proyek).
-    - [Node Slackers](https://www.nodeslackers.com/) is a Node.js-focused Slack community.
-- Akun Twitter resmi Node.js adalah [nodejs](https://twitter.com/nodejs).
-- [Kalender proyek Node.js](https://nodejs.org/calendar) dengan semua rapat tim publik.
+- [Repositori GitHub `nodejs/node`](https://github.com/nodejs/node/issues) adalah tempat diskusi fitur utama Node.js dan melaporkan isu.
+- [Repositori GitHub `nodejs/help`](https://github.com/nodejs/help/issues) adalah tempat resmi untuk mengajukan pertanyaan tentang Node.js.
+- [Discord server resmi](https://discord.gg/nodejs) Node.js adalah tempat berbincang dengan orang pengembang Node.js lain dan mendapatkan kabar resmi dari proyek Node.js.
+- [Kalendar proyek](https://nodejs.org/calendar) Node.js dengan semua pertemuan publik tim Node.js.
 
-## Belajar
+## Materi Pembelajaran
 
-- [Bagian Pembelajaran Resmi](https://nodejs.org/id/learn/) dari situs web Node.js.
-- [Dokumentasi referensi API resmi](https://nodejs.org/api/).
-- [NodeSchool.io](https://nodeschool.io/) akan mengajari Anda konsep Node.js melalui game baris perintah interaktif.
-- [Tag Stack Overflow Node.js](https://stackoverflow.com/questions/tagged/node.js) mengumpulkan informasi baru setiap hari.
-- [Tag Node.js Komunitas DEV](https://dev.to/t/node) adalah tempat untuk berbagi proyek, artikel, dan tutorial Node.js serta memulai diskusi dan meminta masukan terkait Node.js topik. Pengembang dari semua tingkat keahlian dipersilakan untuk mengambil bagian.
-- [Nodeiflux](https://discordapp.com/invite/vUsrbjd) adalah komunitas ramah pengembang backend Node.js yang saling mendukung di Discord.
+Jika kamu ingin mempelajari lebih lanjut tentang Node.js, ada banyak sumber daya yang tersedia untuk mu.
+
+- [Materi belajar resmi](https://nodejs.org/learn/) Node.js.
+- [Dokumentasi referensi resmi API](https://nodejs.org/api/) Node.js.
+- [NodeSchool.io](https://nodeschool.io/) mengajarkan konsep Node.js melalui game baris perintah interaktif.
+- [Label Node.js di StackOverflow](https://stackoverflow.com/questions/tagged/node.js) berisi banyak utas dengan sumber daya yang bermanfaat.
+- [Label Node.js DEV Community](https://dev.to/t/node) berisi artikel dan konten terkait Node.js.
+
+## Area Diskusi Tidak Resmi
+
+Terdapat beberapa forum diskusi tidak resmi jika kamu mencari tempat yang lebih informal untuk membahas Node.js.
+Perlu diperhatikan bahwa proyek Node.js tidak secara resmi mendukung forum-forum ini. Harap patuhi aturan dan kode etik masing-masing forum.
+
+- [Node Slackers](https://www.nodeslackers.com/) adalah komunitas Slack yang berfokus pada Node.js.
+- [OpenJSF Slack](https://slack-invite.openjsf.org/) adalah ruang kerja Slack untuk OpenJS Foundation. Ada beberapa saluran yang terkait dengan Node.js. _(saluran yang diawali dengan `#nodejs-` terkait dengan proyek)_
+- [r/node](https://www.reddit.com/r/node/) adalah subreddit yang berfokus pada Node.js.
+- Untuk IRC, buka `irc.libera.chat` di saluran `#node.js` dengan [klien IRC](https://en.wikipedia.org/wiki/Comparison_of_Internet_Relay_Chat_clients) atau sambungkan di browser web Anda ke saluran menggunakan [klien web](https://kiwiirc.com/nextclient/).

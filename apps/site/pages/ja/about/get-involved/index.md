@@ -1,26 +1,34 @@
 ---
-title: 参加しよう
+title: 活動への参加
 layout: about
 ---
 
-# 参加しよう
+# 活動への参加
+
+Node.jsのコミュニティへの参加の仕方にはさまざまな方法があります。Node.jsプロジェクトは大規模で多様なコミュニティとなっているため、コードを書くこと以外にも貢献する方法はたくさんあります。
 
 ## コミュニティーでの議論
 
-- [GitHub issues](https://github.com/nodejs/node/issues)がNode.jsのコア機能に関する議論の場となっています。
-- Node.jsの開発に関するリアルタイムのチャットには次のプラットフォームを利用してください。
-  - IRCの場合は[IRCクライアント](https://en.wikipedia.org/wiki/Comparison_of_Internet_Relay_Chat_clients)または[ウェブクライアント](https://kiwiirc.com/nextclient/)を利用して`irc.libera.chat`の`#node.js`チャンネルに参加してください。
-  - Slackの場合は2つの選択肢があります：
-    - [OpenJSFのSlack](https://slack-invite.openjsf.org/)にはいくつかのNode.jsに関するチャンネルがあります（接頭辞として`#nodejs-`がつくチャンネル）。
-    - [Node Slackers](https://www.nodeslackers.com/)はNode.jsに特化したSlackコミュニティーです。
-- Node.jsの公式Twitterアカウントは[nodejs](https://twitter.com/nodejs)です。
+- [`nodejs/node` GitHubリポジトリー](https://github.com/nodejs/node/issues)は、Node.jsのコア機能や問題の報告を行うための場所です。
+- [`nodejs/help` GitHubリポジトリー](https://github.com/nodejs/help/issues)でもNode.jsに関する質問を受け付けています。
+- Node.jsの[公式Discordサーバー](https://discord.gg/nodejs)ではNode.js開発者とチャットしたりNode.jsプロジェクトからのニュースを知ることができます。
 - [Node.jsプロジェクトカレンダー](https://nodejs.org/calendar)では公開されている全ての会議を確認できます。
 
-## 学ぶ
+## 学習教材
 
-- Node.jsのウェブサイトに[公式の学習セクション](https://nodejs.org/en/learn/)があります。
-- [公式のAPIリファレンス](https://nodejs.org/api/)
+Node.jsについてもっと学びたい場合は、多数のリソースが利用できます。
+
+- Node.jsの[公式学習コンテンツ](https://nodejs.org/learn/)。
+- Node.jsの[公式APIリファレンス](https://nodejs.org/api/) 。
 - [NodeSchool.io](https://nodeschool.io/)ではインタラクティブなコマンドラインゲームを通してNode.jsのコンセプトを学べます。
-- [Stack OverflowのNode.jsタグ](https://stackoverflow.com/questions/tagged/node.js)には毎日新しい情報が集まっています。
-- [DEVコミュニティーのNode.jsタグ](https://dev.to/t/node)はNode.jsのプロジェクト、記事、チュートリアルを共有したり、Node.js関連のトピックについてディスカッションしたり、フィードバックを求めたりする場になっています。どんなスキルレベルの方でも参加できます。
-- [Nodeiflux](https://discordapp.com/invite/vUsrbjd)はNode.jsのバックエンド開発者がDiscord上でお互いをサポートするフレンドリーなコミュニティーです。
+- [StackOverflowのNode.jsタグ](https://stackoverflow.com/questions/tagged/node.js)には有用なリソースを含んだスレッドがたくさんあります。
+- [The DEV CommunityのNode.jsタグ](https://dev.to/t/node)にはNode.jsに関連した記事やコンテンツがあります。
+
+## 非公式な議論の場
+
+Node.jsについてもっと非公式に議論する場所を探しているのであれば、いくつかの非公式の場があります。Node.jsプロジェクトはこれらを公式に承認していないことに注意してください。それぞれの行動規範やルールに従ってください。
+
+- [Node Slackers](https://www.nodeslackers.com/)はNode.jsに特化したSlackコミュニティーです。
+- [OpenJSF Slack](https://slack-invite.openjsf.org/)はOpenJS財団のSlackワークスペースです。Node.jsに関連するチャンネルがいくつかあります。 _(チャンネル名が `#nodejs-` で始まるチャンネル)_
+- [r/node](https://www.reddit.com/r/node/)はNode.jsに関するサブレディットです。
+- `irc.libera.chat`の`#node.js`は[IRCクライアント](https://en.wikipedia.org/wiki/Comparison_of_Internet_Relay_Chat_clients)や[ウェブクライアント](https://kiwiirc.com/nextclient/)を使って利用できます。

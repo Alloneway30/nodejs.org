@@ -1,25 +1,23 @@
-import type { FC, PropsWithChildren } from 'react';
+import AboutLayout from '#site/layouts/About';
+import ArticlePageLayout from '#site/layouts/ArticlePage';
+import BlogLayout from '#site/layouts/Blog';
+import DefaultLayout from '#site/layouts/Default';
+import DownloadLayout from '#site/layouts/Download';
+import DownloadArchiveLayout from '#site/layouts/DownloadArchive';
+import GlowingBackdropLayout from '#site/layouts/GlowingBackdrop';
+import PostLayout from '#site/layouts/Post';
 
-import AboutLayout from '@/layouts/About';
-import ArticlePageLayout from '@/layouts/ArticlePage';
-import BlogLayout from '@/layouts/Blog';
-import DefaultLayout from '@/layouts/Default';
-import DownloadLayout from '@/layouts/Download';
-import GlowingBackdropLayout from '@/layouts/GlowingBackdrop';
-import LearnLayout from '@/layouts/Learn';
-import PostLayout from '@/layouts/Post';
-import SearchLayout from '@/layouts/Search';
-import type { Layouts } from '@/types';
+import type { Layouts } from '#site/types';
+import type { FC, PropsWithChildren } from 'react';
 
 const layouts = {
   about: AboutLayout,
-  home: props => <GlowingBackdropLayout kind="home" {...props} />,
-  learn: LearnLayout,
+  home: GlowingBackdropLayout,
   page: DefaultLayout,
   'blog-post': PostLayout,
   'blog-category': BlogLayout,
-  search: SearchLayout,
   download: DownloadLayout,
+  'download-archive': DownloadArchiveLayout,
   article: ArticlePageLayout,
 } satisfies Record<Layouts, FC>;
 

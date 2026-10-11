@@ -1,10 +1,12 @@
 'use client';
 
 import { createContext } from 'react';
-import type { FC, PropsWithChildren } from 'react';
 
-import type { ClientSharedServerContext } from '@/types';
-import { assignClientContext } from '@/util/assignClientContext';
+import useDetectOS from '#site/hooks/useDetectOS';
+import { assignClientContext } from '#site/util/context';
+
+import type { ClientSharedServerContext } from '#site/types';
+import type { FC, PropsWithChildren } from 'react';
 
 export const MatterContext = createContext<ClientSharedServerContext>(
   assignClientContext({})
@@ -17,8 +19,12 @@ type MatterProviderProps = PropsWithChildren<
 export const MatterProvider: FC<MatterProviderProps> = ({
   children,
   ...data
-}) => (
-  <MatterContext.Provider value={assignClientContext(data)}>
-    {children}
-  </MatterContext.Provider>
-);
+}) => {
+  const os = useDetectOS();
+
+  return (
+    <MatterContext value={assignClientContext({ ...os, ...data })}>
+      {children}
+    </MatterContext>
+  );
+};

@@ -1,29 +1,29 @@
-import type { FC, PropsWithChildren } from 'react';
+import { getClientContext } from '#site/client-context';
+import WithDownloadSection from '#site/components/withDownloadSection';
+import WithFooter from '#site/components/withFooter';
+import WithNavBar from '#site/components/withNavBar';
+import provideReleaseData from '#site/next-data/providers/releaseData';
 
-import WithDownloadCategories from '@/components/withDownloadCategories';
-import WithFooter from '@/components/withFooter';
-import WithNavBar from '@/components/withNavBar';
-import { useClientContext } from '@/hooks/react-server';
+import type { FC, PropsWithChildren } from 'react';
 
 import styles from './layouts.module.css';
 
 const DownloadLayout: FC<PropsWithChildren> = async ({ children }) => {
-  const {
-    frontmatter: { title, subtitle },
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useClientContext();
+  const { frontmatter } = getClientContext();
+
+  const releases = await provideReleaseData();
 
   return (
     <>
       <WithNavBar />
 
       <div className={styles.downloadLayout}>
-        <main>
-          <h1>{title}</h1>
+        <main id="main" tabIndex={-1}>
+          <h1>{frontmatter.title}</h1>
 
-          <p>{subtitle}</p>
-
-          <WithDownloadCategories>{children}</WithDownloadCategories>
+          <WithDownloadSection releases={releases}>
+            {children}
+          </WithDownloadSection>
         </main>
       </div>
 

@@ -1,11 +1,12 @@
 import { useTranslations } from 'next-intl';
-import type { ComponentProps, FC } from 'react';
 
-import BlogPostCard from '@/components/Common/BlogPostCard';
-import LinkTabs from '@/components/Common/LinkTabs';
-import Pagination from '@/components/Common/Pagination';
-import type { BlogPostsRSC } from '@/types';
-import { mapAuthorToCardAuthors } from '@/util/blogUtils';
+import BlogPostCard from '#site/components/Blog/BlogPostCard';
+import LinkTabs from '#site/components/Common/LinkTabs';
+import Pagination from '#site/components/Common/Pagination';
+import { mapAuthorToCardAuthors } from '#site/util/author';
+
+import type { BlogPostsRSC } from '#site/types';
+import type { ComponentProps, FC } from 'react';
 
 type WithBlogCategoriesProps = {
   categories: ComponentProps<typeof LinkTabs>['tabs'];
@@ -30,7 +31,7 @@ const WithBlogCategories: FC<WithBlogCategoriesProps> = ({
         tabs={categories}
         activeTab={blogData.category}
       >
-        <div className="max-xs:grid-cols-[1fr] grid grid-cols-[repeat(auto-fill,minmax(theme(spacing.80),1fr))] [grid-gap:theme(spacing.12)_theme(spacing.8)]">
+        <div className="max-ml:grid-cols-[1fr] grid grid-cols-[repeat(auto-fill,minmax(--spacing(80),1fr))] [grid-gap:--spacing(12)_--spacing(8)]">
           {blogData.posts.map(post => (
             <BlogPostCard
               key={post.slug}

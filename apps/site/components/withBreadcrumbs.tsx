@@ -1,12 +1,17 @@
 'use client';
 
-import type { FC } from 'react';
+import Breadcrumbs from '@node-core/ui-components/Common/Breadcrumbs';
+import { useTranslations } from 'next-intl';
 
-import type { BreadcrumbLink } from '@/components/Common/Breadcrumbs';
-import Breadcrumbs from '@/components/Common/Breadcrumbs';
-import { useClientContext, useMediaQuery, useSiteNavigation } from '@/hooks';
-import type { NavigationKeys } from '@/types';
-import { dashToCamelCase } from '@/util/stringUtils';
+import Link from '#site/components/Link';
+import useClientContext from '#site/hooks/useClientContext';
+import useMediaQuery from '#site/hooks/useMediaQuery';
+import useSiteNavigation from '#site/hooks/useSiteNavigation';
+import { dashToCamelCase } from '#site/util/string';
+
+import type { NavigationKeys } from '#site/types';
+import type { BreadcrumbLink } from '@node-core/ui-components/Common/Breadcrumbs';
+import type { FC } from 'react';
 
 type WithBreadcrumbsProps = {
   navKeys?: Array<NavigationKeys>;
@@ -14,12 +19,13 @@ type WithBreadcrumbsProps = {
 
 const WithBreadcrumbs: FC<WithBreadcrumbsProps> = ({ navKeys = [] }) => {
   const { getSideNavigation } = useSiteNavigation();
+  const t = useTranslations();
   const { pathname } = useClientContext();
   const isMobileScreen = useMediaQuery('(max-width: 639px)');
 
   const maxLength = isMobileScreen ? 2 : 4;
 
-  const getBreadrumbs = () => {
+  const getBreadcrumbs = () => {
     const navigationTree = getSideNavigation(navKeys);
 
     const pathList = pathname
@@ -57,7 +63,14 @@ const WithBreadcrumbs: FC<WithBreadcrumbsProps> = ({ navKeys = [] }) => {
     }, [] as Array<BreadcrumbLink>);
   };
 
-  return <Breadcrumbs links={getBreadrumbs()} maxLength={maxLength} />;
+  return (
+    <Breadcrumbs
+      links={getBreadcrumbs()}
+      maxLength={maxLength}
+      as={Link}
+      homeLinkAriaLabel={t('components.common.breadcrumbs.navigateToHome')}
+    />
+  );
 };
 
 export default WithBreadcrumbs;

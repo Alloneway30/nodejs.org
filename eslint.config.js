@@ -1,28 +1,45 @@
 import js from '@eslint/js';
-import importX from 'eslint-plugin-import-x';
-import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
+import * as importX from 'eslint-plugin-import-x';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default tseslint.config(
   js.configs.recommended,
-  importX.flatConfigs.recommended,
+  tseslint.configs.recommended,
+  tseslint.configs.stylistic,
+  importX.flatConfigs.typescript,
+
   {
     ignores: [
       'node_modules',
       '.turbo',
       '.next',
       'build',
-      'coverage',
+      'lcov.info',
       'global.d.ts',
       'junit.xml',
       'storybook-static/**',
+      '**/.wrangler',
+      '**/.open-next',
+      'test-results',
+      'playwright-report',
+      'dist',
     ],
   },
+
   {
-    files: ['**/*.{js,mjs,ts,tsx}'],
-    plugins: {
-      'no-relative-import-paths': noRelativeImportPaths,
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.nodeBuiltin,
+      },
     },
+
     rules: {
+      '@typescript-eslint/array-type': ['error', { default: 'generic' }],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/no-empty-function': 'off',
+
       'import-x/namespace': 'off',
       'import-x/no-named-as-default-member': 'off',
       'import-x/no-unresolved': 'off',
@@ -33,10 +50,29 @@ export default [
             'builtin',
             'external',
             'internal',
+            'object',
+            'type',
             ['sibling', 'parent'],
             'index',
-            'unknown',
           ],
+          pathGroups: [
+            {
+              pattern: '{.,..}/**/*.css',
+              group: 'sibling',
+              position: 'after',
+            },
+            {
+              pattern: './**/*.css',
+              group: 'sibling',
+              position: 'after',
+            },
+            {
+              pattern: '../**/*.css',
+              group: 'sibling',
+              position: 'after',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['type'],
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',
@@ -44,10 +80,25 @@ export default [
           },
         },
       ],
-      'no-relative-import-paths/no-relative-import-paths': [
-        'warn',
-        { allowSameFolder: true, prefix: '@' },
+
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "ImportDeclaration[source.value='react'][specifiers.0.type='ImportDefaultSpecifier']",
+          message:
+            'Default React import not allowed since we use the TypeScript jsx-transform. If you need a global type that collides with a React named export (such as `MouseEvent`), try using `globalThis.MouseHandler`',
+        },
+        {
+          selector:
+            "ImportDeclaration[source.value='react'] :matches(ImportNamespaceSpecifier)",
+          message:
+            'Named * React import is not allowed. Please import what you need from React with Named Imports',
+        },
       ],
+
+      'object-shorthand': 'error',
+      curly: ['error', 'all'],
     },
-  },
-];
+  }
+);

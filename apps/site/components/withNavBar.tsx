@@ -1,43 +1,102 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import LanguageDropdown from '@node-core/ui-components/Common/LanguageDropDown';
+import Skeleton from '@node-core/ui-components/Common/Skeleton';
+import SkipToContentButton from '@node-core/ui-components/Common/SkipToContentButton';
+import NavBar from '@node-core/ui-components/Containers/NavBar';
+// TODO(@AvivKeller): I don't like that we are importing styles from another module
+import styles from '@node-core/ui-components/Containers/NavBar/index.module.css';
+import GitHubIcon from '@node-core/ui-components/Icons/Social/GitHub';
+import { availableLocales } from '@node-core/website-i18n';
+import dynamic from 'next/dynamic';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+
+import Link from '#site/components/Link';
+import WithBanner from '#site/components/withBanner';
+import WithNodejsLogo from '#site/components/withNodejsLogo';
+import WithSearch from '#site/components/withSearch';
+import useSiteNavigation from '#site/hooks/useSiteNavigation';
+import { useRouter, usePathname } from '#site/navigation.mjs';
+
+import type { Theme } from '@node-core/ui-components/Common/ThemeToggle';
+import type { SimpleLocaleConfig } from '@node-core/ui-components/types';
 import type { FC } from 'react';
 
-import NavBar from '@/components/Containers/NavBar';
-import WithBanner from '@/components/withBanner';
-import { useClientContext, useSiteNavigation } from '@/hooks';
-import { useRouter } from '@/navigation.mjs';
-import { availableLocales } from '@/next.locales.mjs';
+const ThemeToggle = dynamic(
+  () => import('@node-core/ui-components/Common/ThemeToggle'),
+  {
+    ssr: false,
+    loading: () => (
+      <Skeleton className={styles.themeToggleSkeleton} loading={true} />
+    ),
+  }
+);
 
 const WithNavBar: FC = () => {
   const { navigationItems } = useSiteNavigation();
-  const { resolvedTheme, setTheme } = useTheme();
-  const { pathname } = useClientContext();
+  const { theme, setTheme } = useTheme();
   const { replace } = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations();
 
   const locale = useLocale();
 
-  const toggleCurrentTheme = () =>
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  const changeLanguage = (locale: SimpleLocaleConfig) =>
+    replace(pathname!, { locale: locale.code });
 
   return (
     <div>
+      <SkipToContentButton>
+        {t('components.common.skipToContent')}
+      </SkipToContentButton>
+
       <WithBanner section="index" />
 
       <NavBar
-        onThemeTogglerClick={toggleCurrentTheme}
-        languages={{
-          currentLanguage: locale,
-          availableLanguages: availableLocales,
-          onChange: locale => replace(pathname!, { locale: locale.code }),
-        }}
-        navItems={navigationItems.map(([, { label, link, target }]) => ({
-          link,
-          text: label,
-          target,
-        }))}
-      />
+        navItems={navigationItems.map(
+          ([, { label, link, target, accent }]) => ({
+            link,
+            text: label,
+            target,
+            accent,
+          })
+        )}
+        pathname={pathname}
+        as={Link}
+        Logo={WithNodejsLogo}
+        sidebarItemTogglerAriaLabel={t(
+          'components.containers.navBar.controls.toggle'
+        )}
+      >
+        <WithSearch />
+
+        <ThemeToggle
+          onChange={setTheme}
+          currentTheme={(theme as Theme) ?? 'system'}
+          ariaLabel={t('components.header.buttons.theme')}
+          themeLabels={{
+            system: t('components.header.buttons.themeSystem'),
+            light: t('components.header.buttons.themeLightMode'),
+            dark: t('components.header.buttons.themeDarkMode'),
+          }}
+        />
+
+        <LanguageDropdown
+          onChange={changeLanguage}
+          availableLanguages={availableLocales}
+          currentLanguage={locale}
+          ariaLabel={t('components.common.languageDropdown.label')}
+        />
+
+        <Link
+          href="https://github.com/nodejs/node"
+          aria-label="Node.js Github"
+          className={styles.ghIconWrapper}
+        >
+          <GitHubIcon />
+        </Link>
+      </NavBar>
     </div>
   );
 };

@@ -1,22 +1,19 @@
 'use client';
 
-import type { FC, PropsWithChildren } from 'react';
-import { useContext } from 'react';
+import { use } from 'react';
 
-import LinkWithArrow from '@/components/Downloads/Release/LinkWithArrow';
-import { ReleaseContext } from '@/providers/releaseProvider';
+import LinkWithArrow from '#site/components/Common/LinkWithArrow';
+import { BASE_CHANGELOG_URL } from '#site/next.constants.mjs';
+import { ReleaseContext } from '#site/providers/releaseProvider';
+
+import type { FC, PropsWithChildren } from 'react';
 
 const ChangelogLink: FC<PropsWithChildren> = ({ children }) => {
-  const { modalOpen, setModalOpen } = useContext(ReleaseContext);
+  const { release } = use(ReleaseContext);
 
   return (
-    <LinkWithArrow asChild>
-      <button
-        className="anchor cursor-pointer"
-        onClick={() => setModalOpen(!modalOpen)}
-      >
-        {children}
-      </button>
+    <LinkWithArrow href={`${BASE_CHANGELOG_URL}${release.version}`}>
+      {children}
     </LinkWithArrow>
   );
 };

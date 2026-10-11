@@ -1,8 +1,9 @@
-import type { DateTimeFormatOptions } from 'next-intl';
 import { useFormatter } from 'next-intl';
-import type { FC } from 'react';
 
-import { DEFAULT_DATE_FORMAT } from '@/next.calendar.constants.mjs';
+import { DEFAULT_DATE_FORMAT } from '#site/next.calendar.constants.mjs';
+
+import type { DateTimeFormatOptions } from 'next-intl';
+import type { FC } from 'react';
 
 type FormattedTimeProps = {
   date: string | Date;
@@ -11,6 +12,8 @@ type FormattedTimeProps = {
 
 const FormattedTime: FC<FormattedTimeProps> = ({ date, format }) => {
   const formatter = useFormatter();
+
+  // "date" is deterministic
 
   const dateObject = new Date(date);
 

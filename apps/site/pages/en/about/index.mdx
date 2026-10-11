@@ -53,12 +53,12 @@ synchronous methods of Node.js standard library. Because nothing blocks, scalabl
 reasonable to develop in Node.js.
 
 If some of this language is unfamiliar, there is a full article on
-[Blocking vs. Non-Blocking][].
+[Blocking vs. Non-Blocking](/learn/asynchronous-work/overview-of-blocking-vs-non-blocking).
 
 ---
 
 Node.js is similar in design to, and influenced by, systems like Ruby's
-[Event Machine][] and Python's [Twisted][]. Node.js takes the event model a bit
+[Event Machine](https://github.com/eventmachine/eventmachine) and Python's [Twisted](https://twisted.org/). Node.js takes the event model a bit
 further. It presents an event loop as a runtime construct instead of as a library. In other systems,
 there is always a blocking call to start the event-loop.
 Typically, behavior is defined through callbacks at the beginning of a script, and
@@ -73,13 +73,50 @@ library or framework.
 
 Node.js being designed without threads doesn't mean you can't take
 advantage of multiple cores in your environment. Child processes can be spawned
-by using our [`child_process.fork()`][] API, and are designed to be easy to
-communicate with. Built upon that same interface is the [`cluster`][] module,
+by using our [`child_process.fork()`](https://nodejs.org/api/child_process.html) API, and are designed to be easy to
+communicate with. Built upon that same interface is the [`cluster`](https://nodejs.org/api/cluster.html) module,
 which allows you to share sockets between processes to enable load balancing
 over your cores.
 
-[blocking vs. non-blocking]: /learn/asynchronous-work/overview-of-blocking-vs-non-blocking
-[`child_process.fork()`]: https://nodejs.org/api/child_process.html
-[`cluster`]: https://nodejs.org/api/cluster.html
-[event machine]: https://github.com/eventmachine/eventmachine
-[twisted]: https://twisted.org/
+## Official Node.js Resources
+
+To ensure authenticity and security when working with Node.js, always use official sources. Avoid trusting emails,
+binaries, or downloads from unofficial sources.
+
+### Official Node.js Domains
+
+For downloading Node.js binaries and accessing official documentation, use only these domains:
+
+- [nodejs.org](https://nodejs.org)
+- [nodejs.dev](https://nodejs.dev) _(Redirects to https://nodejs.org)_
+- [iojs.org](https://iojs.org) _(Redirects to https://nodejs.org)_
+
+### Official npm Packages
+
+The Node.js team maintains the following official npm package scopes:
+
+- [`@node-core`](https://npmjs.com/~node-core)
+- [`@pkgjs`](https://npmjs.com/~pkgjs)
+
+Additionally, the Node.js team maintains packages published by the [`nodejs-foundation`](https://npmjs.com/~nodejs-foundation) npm account,
+though other Node.js-related packages (like [`undici`](https://www.npmjs.com/package/undici)) may also be maintained by contributors closely
+tied to the project.
+
+Using packages from the Node.js team guarantees that you are working with officially supported Node.js components.
+
+### Official GitHub Organizations
+
+Node.js and related projects are maintained under these official GitHub organizations:
+
+- [nodejs](https://github.com/nodejs)
+- [pkgjs](https://github.com/pkgjs)
+
+### Official Communication Channels
+
+Node.js and the OpenJS Foundation communicate through various official and community-supported channels. You can find details on
+how to get involved on the [Get Involved](https://nodejs.org/en/about/get-involved) page.
+
+### Reporting Website Issues & Downtime
+
+If you encounter issues with the Node.js website, report them at the [Node.js website repository](https://github.com/nodejs/nodejs.org/issues).
+For real-time updates on outages, visit the [Node.js Status Page](https://status.nodejs.org).

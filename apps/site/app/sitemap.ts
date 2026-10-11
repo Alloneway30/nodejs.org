@@ -1,68 +1,57 @@
-import type { MetadataRoute } from 'next';
+import { availableLocaleCodes, defaultLocale } from '@node-core/website-i18n';
 
 import {
   BASE_PATH,
   BASE_URL,
   EXTERNAL_LINKS_SITEMAP,
-} from '@/next.constants.mjs';
-import { dynamicRouter } from '@/next.dynamic.mjs';
-import { availableLocaleCodes, defaultLocale } from '@/next.locales.mjs';
+} from '#site/next.constants.mjs';
+import { BLOG_DYNAMIC_ROUTES } from '#site/next.dynamic.constants.mjs';
+import { dynamicRouter } from '#site/next.dynamic.mjs';
+
+import type { MetadataRoute } from 'next';
 
 // This is the combination of the Application Base URL and Base PATH
 const baseUrlAndPath = `${BASE_URL}${BASE_PATH}`;
 
+// All available alternate locales
+const nonDefaultLocales = availableLocaleCodes.filter(
+  l => l !== defaultLocale.code
+);
+
+const getFullPath = (r: string, l: string) =>
+  /^https?:\/\//.test(r) ? r : `${baseUrlAndPath}/${l}/${r}`;
+
+const getAlternatePaths = (r: string, locales: Array<string>) =>
+  Object.fromEntries(locales.map(l => [l, getFullPath(r, l)]));
+
 // This allows us to generate a `sitemap.xml` file dynamically based on the needs of the Node.js Website
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const routes = await dynamicRouter.getRoutesByLanguage(defaultLocale.code);
-  const paths = [];
+  // Gets a list of all statically available routes
+  const routes = await dynamicRouter.getAllRoutes();
 
   const currentDate = new Date().toISOString();
 
-  for (const route of routes) {
-    const availableLocalesForRoute = [];
+  const getSitemapEntry = (r: string, locales: Array<string> = []) => ({
+    url: getFullPath(r, defaultLocale.code),
+    lastModified: currentDate,
+    changeFrequency: 'always' as const,
+    alternates: { languages: getAlternatePaths(r, locales) },
+  });
 
-    for (const locale of availableLocaleCodes.filter(
-      locale => locale !== defaultLocale.code
-    )) {
-      const markdownFile = await dynamicRouter.getMarkdownFile(locale, route);
-      const isAvailable = markdownFile.filename !== '';
-      if (isAvailable) {
-        availableLocalesForRoute.push(locale);
-      }
-    }
+  const staticPaths = routes.map(r => getSitemapEntry(r, nonDefaultLocales));
+  const blogPaths = BLOG_DYNAMIC_ROUTES.map(r => getSitemapEntry(`blog/${r}`));
+  const externalPaths = EXTERNAL_LINKS_SITEMAP.map(r => getSitemapEntry(r));
 
-    const alternatesPaths = availableLocalesForRoute.reduce(
-      (acc, locale) => ({
-        ...acc,
-        [locale]: `${baseUrlAndPath}/${locale}/${route}`,
-      }),
-      {}
-    );
-
-    paths.push({
-      url: `${baseUrlAndPath}/${defaultLocale.code}/${route}`,
-      lastModified: currentDate,
-      changeFrequency: 'always' as const,
-      alternates: {
-        languages: {
-          ...alternatesPaths,
-        },
-      },
-    });
-  }
-
-  return [
-    ...paths,
-    ...EXTERNAL_LINKS_SITEMAP.map(route => ({
-      url: route,
-      lastModified: currentDate,
-      changeFrequency: 'always' as const,
-    })),
-  ];
+  return [...staticPaths, ...blogPaths, ...externalPaths];
 };
 
 export default sitemap;
 
 // Enforces that this route is used as static rendering
 // @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
-export const dynamic = 'error';
+export const dynamic = 'force-static';
+
+// Ensures that this endpoint is invalidated and re-executed every X minutes
+// so that when new deployments happen, the data is refreshed
+// @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#revalidate
+export const revalidate = false;

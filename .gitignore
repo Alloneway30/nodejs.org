@@ -1,17 +1,28 @@
 # Commonly ignored Node.js files
 node_modules
-npm-debug.log
-.npm
 .env.*
 
-# Next.js Build Output
-.next
-build
+# npm Compatibility
+# https://github.com/nodejs/nodejs.org/discussions/5334#discussioncomment-12827850
+npm-debug.log
+.npm
+package-lock.json
 
-# Jest
-coverage
-.swc
+# Next.js Build Output
+apps/site/.next
+apps/site/build
+apps/site/public/blog-data.json
+apps/site/next-env.d.ts
+
+# Generated Build Artifacts
+platforms/cloudflare/generated
+
+# Test Runner
 junit.xml
+lcov.info
+
+# Distributed Files
+dist
 
 # Storybook
 storybook-static
@@ -30,8 +41,18 @@ cache
 
 # TypeScript
 tsconfig.tsbuildinfo
-
-# Sentry Config File
-.sentryclirc
-
 dist/
+
+# Cloudflare Build Output
+apps/site/.open-next
+apps/site/.wrangler
+
+## Playwright
+test-results
+playwright-report
+
+## MacOS Ignored Files
+.DS_Store
+
+## Other Files
+.env

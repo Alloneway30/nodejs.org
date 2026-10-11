@@ -1,23 +1,29 @@
-import type { FC, PropsWithChildren } from 'react';
+import Article from '@node-core/ui-components/Containers/Article';
 
-import WithMetaBar from '@/components/withMetaBar';
-import WithNavBar from '@/components/withNavBar';
-import WithSidebar from '@/components/withSidebar';
-import ArticleLayout from '@/layouts/Article';
+import WithFooter from '#site/components/withFooter';
+import WithMetaBar from '#site/components/withMetaBar';
+import WithNavBar from '#site/components/withNavBar';
+import WithSidebar from '#site/components/withSidebar';
+
+import type { FC, PropsWithChildren } from 'react';
 
 const ArticlePageLayout: FC<PropsWithChildren> = ({ children }) => (
   <>
     <WithNavBar />
 
-    <ArticleLayout>
+    <Article>
       <WithSidebar navKeys={[]} />
 
       <div>
-        <main>{children}</main>
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
 
         <WithMetaBar />
       </div>
-    </ArticleLayout>
+    </Article>
+
+    <WithFooter />
   </>
 );
 

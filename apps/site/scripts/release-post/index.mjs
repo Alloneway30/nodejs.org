@@ -20,9 +20,10 @@
 
 'use strict';
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, appendFileSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { parseArgs } from 'node:util';
 
 import handlebars from 'handlebars';
 import { format } from 'prettier';
@@ -58,10 +59,20 @@ const ERRORS = {
     new Error(`Failed to write Release post: Reason: ${reason}`),
 };
 
+const parsedArgs = parseArgs({
+  options: {
+    force: {
+      type: 'boolean',
+      short: 'f',
+    },
+  },
+  allowPositionals: true,
+});
+
 const ARGS = {
   CURRENT_PATH: process.argv[1],
-  SPECIFIC_VERSION: process.argv[2] && process.argv[2].replace('--force', ''),
-  SHOULD_FORCE: (process.argv[3] || process.argv[2]) === '--force',
+  SPECIFIC_VERSION: parsedArgs.positionals[0]?.replace(/^v/, ''),
+  SHOULD_FORCE: Boolean(parsedArgs.values.force),
 };
 
 // this allows us to get the current module working directory
@@ -114,7 +125,15 @@ const fetchAuthor = version => {
   return fetchChangelog(version)
     .then(section => findAuthorLogin(version, section))
     .then(author => request({ url: URLS.GITHUB_PROFILE(author), json: true }))
-    .then(githubRes => githubRes.name);
+    .then(({ name, login }) => {
+      if (process.env.GITHUB_OUTPUT) {
+        // If we are running in a GitHub runner, we need to store the username
+        // so that the PR can be assigned to them
+        appendFileSync(process.env.GITHUB_OUTPUT, `author=${login}\n`);
+      }
+
+      return name;
+    });
 };
 
 const fetchChangelog = version => {
@@ -174,7 +193,7 @@ const verifyDownloads = version =>
   Promise.all(downloadsTable(version).map(urlOrComingSoon));
 
 const findAuthorLogin = (version, section) => {
-  // looking for the @author part of the release header, eg:
+  // looking for the @author part of the release header, e.g.:
   // ## 2016-03-08, Version 5.8.0 (Stable). @Fishrock123
   // ## 2015-10-13, Version 4.2.1 'Argon' (LTS), @jasnell
   // ## 2015-09-08, Version 4.0.0 (Stable), @rvagg
@@ -262,9 +281,6 @@ if (import.meta.url.startsWith('file:')) {
       .then(renderPost)
       .then(formatPost)
       .then(writeToFile)
-      .then(
-        filepath => console.log('Release post created:', filepath),
-        error => console.error('Some error occurred here!', error.stack)
-      );
+      .then(filepath => console.log('Release post created:', filepath));
   }
 }

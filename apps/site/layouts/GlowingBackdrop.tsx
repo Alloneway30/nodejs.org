@@ -1,26 +1,29 @@
+import GlowingBackdrop from '@node-core/ui-components/Common/GlowingBackdrop';
 import classNames from 'classnames';
-import type { FC, PropsWithChildren } from 'react';
 
-import GlowingBackdrop from '@/components/Common/GlowingBackdrop';
-import WithFooter from '@/components/withFooter';
-import WithNavBar from '@/components/withNavBar';
+import WithFooter from '#site/components/withFooter';
+import WithNavBar from '#site/components/withNavBar';
+
+import type { FC, PropsWithChildren } from 'react';
 
 import styles from './layouts.module.css';
 
 type GlowingBackdropLayoutProps = PropsWithChildren<{
-  kind?: 'home';
+  kind?: 'home' | 'default';
 }>;
 
-const GlowingBackdropLayout: FC<GlowingBackdropLayoutProps> = ({
-  kind,
-  children,
-}) => (
+const GlowingBackdropLayout: FC<
+  PropsWithChildren<GlowingBackdropLayoutProps>
+> = ({ kind = 'home', children }) => (
   <>
     <WithNavBar />
+
     <div className={styles.centeredLayout}>
       <GlowingBackdrop />
 
       <main
+        id="main"
+        tabIndex={-1}
         className={classNames({
           [styles.homeLayout]: kind === 'home',
         })}
@@ -28,6 +31,7 @@ const GlowingBackdropLayout: FC<GlowingBackdropLayoutProps> = ({
         {children}
       </main>
     </div>
+
     <WithFooter />
   </>
 );

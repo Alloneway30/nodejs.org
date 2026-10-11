@@ -1,33 +1,41 @@
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import PlatformAnalytics from '#platform/analytics';
+import { availableLocales, defaultLocale } from '@node-core/website-i18n';
 import classNames from 'classnames';
+import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
+
+import BaseLayout from '#site/layouts/Base';
+import { IBM_PLEX_MONO, OPEN_SANS } from '#site/next.fonts';
+import { HashProvider } from '#site/providers/hashProvider';
+import { ThemeProvider } from '#site/providers/themeProvider';
+
 import type { FC, PropsWithChildren } from 'react';
 
-import BaseLayout from '@/layouts/Base';
-import { VERCEL_ENV } from '@/next.constants.mjs';
-import { IBM_PLEX_MONO, OPEN_SANS } from '@/next.fonts';
-import { availableLocalesMap, defaultLocale } from '@/next.locales.mjs';
-import { LocaleProvider } from '@/providers/localeProvider';
-import { ThemeProvider } from '@/providers/themeProvider';
-
-import '@/styles/index.css';
+import '#site/styles/index.css';
 
 const fontClasses = classNames(IBM_PLEX_MONO.variable, OPEN_SANS.variable);
 
 const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
   const locale = await getLocale();
 
-  const { langDir, hrefLang } = availableLocalesMap[locale] || defaultLocale;
+  const { langDir, hrefLang } =
+    availableLocales.find(l => l.code === locale) || defaultLocale;
 
   return (
-    <html className={fontClasses} dir={langDir} lang={hrefLang}>
+    <html
+      className={fontClasses}
+      dir={langDir}
+      lang={hrefLang}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
-        <LocaleProvider>
-          <ThemeProvider>
-            <BaseLayout>{children}</BaseLayout>
-          </ThemeProvider>
-        </LocaleProvider>
+        <NextIntlClientProvider>
+          <HashProvider>
+            <ThemeProvider>
+              <BaseLayout>{children}</BaseLayout>
+            </ThemeProvider>
+          </HashProvider>
+        </NextIntlClientProvider>
 
         <a
           rel="me"
@@ -36,12 +44,7 @@ const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
           href="https://social.lfx.dev/@nodejs"
         />
 
-        {VERCEL_ENV && (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        )}
+        <PlatformAnalytics />
       </body>
     </html>
   );

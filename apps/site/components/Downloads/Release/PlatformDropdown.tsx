@@ -1,84 +1,91 @@
 'use client';
+
+import Select from '@node-core/ui-components/Common/Select';
 import { useTranslations } from 'next-intl';
-import { useContext, useEffect, useMemo } from 'react';
+import { useEffect, use, useMemo, useState } from 'react';
+
+import useClientContext from '#site/hooks/useClientContext';
+import { ReleaseContext } from '#site/providers/releaseProvider';
+import { PLATFORMS, nextItem, parseCompat } from '#site/util/download';
+import { getUserPlatform } from '#site/util/userAgent';
+
+import type { Platform } from '#site/types/userAgent';
 import type { FC } from 'react';
 
-import Select from '@/components/Common/Select';
-import Choco from '@/components/Icons/Platform/Choco';
-import Docker from '@/components/Icons/Platform/Docker';
-import FNM from '@/components/Icons/Platform/FNM';
-import Homebrew from '@/components/Icons/Platform/Homebrew';
-import NVM from '@/components/Icons/Platform/NVM';
-import { ReleaseContext } from '@/providers/releaseProvider';
-import type { PackageManager } from '@/types/release';
-import { formatDropdownItems, platformItems } from '@/util/downloadUtils';
-
-const supportedHomebrewVersions = ['LTS', 'Current'];
-
 const PlatformDropdown: FC = () => {
-  const { release, os, platform, setPlatform } = useContext(ReleaseContext);
+  const { architecture, bitness } = useClientContext();
+
+  const release = use(ReleaseContext);
+
   const t = useTranslations();
 
-  // @TODO: We should have a proper utility that gives
-  // disabled OSs, Platforms, based on specific criteria
-  // this can be an optimisation for the future
-  // to remove this logic from this component
-  const disabledItems = useMemo(() => {
-    const disabledItems = [];
+  // Compute the platform during render so it's available to both `useEffect` calls below in the same cycle
+  // (avoiding race conditions when architecture detection and OS detection arrive in the same batch)
+  const currentPlatform =
+    architecture && bitness ? getUserPlatform(architecture, bitness) : null;
 
-    if (os === 'WIN') {
-      disabledItems.push('BREW', 'NVM');
-    }
+  // Track whether the user has manually selected a platform via the dropdown.
+  // When true the OS/version effect will respect their choice instead of
+  // resetting to the auto-detected value.
+  const [userHasSelectedPlatform, setUserHasSelectedPlatform] = useState(false);
 
-    if (os === 'LINUX' || os === 'MAC') {
-      disabledItems.push('CHOCO');
-    }
+  useEffect(
+    () => {
+      if (currentPlatform) {
+        // eslint-disable-next-line @eslint-react/set-state-in-effect
+        setUserHasSelectedPlatform(false);
+        release.setPlatform(currentPlatform);
+      }
+    },
+    // Only react on the change of the Client Context Architecture and Bitness
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
+    [architecture, bitness]
+  );
 
-    const releaseSupportsHomebrew = supportedHomebrewVersions.includes(
-      release.status
-    );
+  // We parse the compatibility of the dropdown items
+  const parsedPlatforms = useMemo(
+    () =>
+      // We only want to parse the compatibility when the OS has finished loading
+      // Otherwise, we would be parsing the compatibility of an empty array
+      release.os !== 'LOADING'
+        ? parseCompat(PLATFORMS[release.os], release)
+        : [],
+    // We only want to react on the change of the OS, Platform, and Version
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
+    [release.os, release.version]
+  );
 
-    if (!releaseSupportsHomebrew) {
-      disabledItems.push('BREW');
-    }
+  // We set the Platform to the next available Architecture when the current
+  // one is not valid anymore due to OS or Version changes
+  useEffect(
+    () => {
+      if (release.os !== 'LOADING' && release.platform !== '') {
+        // If the user has not manually selected a platform and there is a currently
+        // auto-detected one then use it otherwise fallback to the current release platform
+        const basePlatform =
+          !userHasSelectedPlatform && currentPlatform
+            ? currentPlatform
+            : release.platform;
 
-    return disabledItems;
-  }, [os, release.status]);
-
-  // @TODO: We should have a proper utility that gives
-  // disabled OSs, Platforms, based on specific criteria
-  // this can be an optimisation for the future
-  // to remove this logic from this component
-  useEffect(() => {
-    const currentPlatformExcluded = disabledItems.includes(platform);
-
-    const nonExcludedPlatform = platformItems
-      .map(({ value }) => value)
-      .find(platform => !disabledItems.includes(platform));
-
-    if (currentPlatformExcluded && nonExcludedPlatform) {
-      setPlatform(nonExcludedPlatform);
-    }
-    // we shouldn't react when "actions" change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [release.status, disabledItems, platform]);
+        release.setPlatform(nextItem(basePlatform, parsedPlatforms));
+      }
+    },
+    // We only want to react on the change of the OS and Version
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
+    [release.os, release.version]
+  );
 
   return (
-    <Select
-      values={formatDropdownItems({
-        items: platformItems,
-        icons: {
-          NVM: <NVM width={16} height={16} />,
-          FNM: <FNM width={16} height={16} />,
-          BREW: <Homebrew width={16} height={16} />,
-          DOCKER: <Docker width={16} height={16} />,
-          CHOCO: <Choco width={16} height={16} />,
-        },
-        disabledItems,
-      })}
+    <Select<Platform>
+      values={parsedPlatforms}
+      value={release.platform !== '' ? release.platform : undefined}
+      loading={release.os === 'LOADING' || release.platform === ''}
+      placeholder={t('layouts.download.dropdown.unknown')}
       ariaLabel={t('layouts.download.dropdown.platform')}
-      defaultValue={platform}
-      onChange={platform => setPlatform(platform as PackageManager)}
+      onChange={platform => {
+        setUserHasSelectedPlatform(true);
+        release.setPlatform(platform);
+      }}
       className="min-w-28"
       inline={true}
     />

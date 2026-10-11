@@ -85,12 +85,12 @@
       "destination": "https://openjsf.org/certification"
     },
     {
-      "source": "/guides",
-      "destination": "/en/learn"
-    },
-    {
       "source": "/about",
       "destination": "/en/about"
+    },
+    {
+      "source": "/about/:path*",
+      "destination": "/en/about/:path*"
     },
     {
       "source": "/community",
@@ -109,12 +109,16 @@
       "destination": "/en/blog/:path*"
     },
     {
-      "source": "/:locale/community",
-      "destination": "/:locale/get-involved"
+      "source": "/learn/:path*",
+      "destination": "https://nodejs.org/learn/:path*"
     },
     {
-      "source": "/:locale/docs/inspector",
-      "destination": "/:locale/learn/getting-started/debugging"
+      "source": "/:locale/learn/:path*",
+      "destination": "https://nodejs.org/learn/:path*"
+    },
+    {
+      "source": "/:locale/community",
+      "destination": "/:locale/get-involved"
     },
     {
       "source": "/:locale/contribute/:path*",
@@ -153,6 +157,10 @@
       "destination": "/static/images/favicons/favicon.png"
     },
     {
+      "source": "/(static/)images/favicons/favicon.ico",
+      "destination": "/static/images/favicons/favicon.png"
+    },
+    {
       "source": "/(static/)images/logo.svg",
       "destination": "/static/logos/nodejsLight.svg"
     },
@@ -173,90 +181,6 @@
       "destination": "https://nodejs.org/docs/latest/api/"
     },
     {
-      "source": "/:locale/docs/guides",
-      "destination": "/:locale/guides"
-    },
-    {
-      "source": "/:locale/docs/guides/domain-postmortem",
-      "destination": "/:locale/blog/community/domain-postmortem"
-    },
-    {
-      "source": "/:locale/docs/es6",
-      "destination": "/:locale/learn/getting-started/ecmascript-2015-es6-and-beyond"
-    },
-    {
-      "source": "/:locale/docs/guides/:path*",
-      "destination": "/:locale/guides/:path*"
-    },
-    {
-      "source": "/:locale/guides",
-      "destination": "/:locale/learn"
-    },
-    {
-      "source": "/:locale/guides/getting-started-guide",
-      "destination": "/:locale/learn/getting-started/introduction-to-nodejs"
-    },
-    {
-      "source": "/:locale/guides/blocking-vs-non-blocking",
-      "destination": "/:locale/learn/asynchronous-work/overview-of-blocking-vs-non-blocking"
-    },
-    {
-      "source": "/:locale/guides/timers-in-node",
-      "destination": "/:locale/learn/asynchronous-work/discover-javascript-timers"
-    },
-    {
-      "source": "/:locale/guides/working-with-different-filesystems",
-      "destination": "/:locale/learn/manipulating-files/working-with-different-filesystems"
-    },
-    {
-      "source": "/:locale/guides/anatomy-of-an-http-transaction",
-      "destination": "/:locale/learn/modules/anatomy-of-an-http-transaction"
-    },
-    {
-      "source": "/:locale/guides/backpressuring-in-streams/",
-      "destination": "/:locale/learn/modules/backpressuring-in-streams/"
-    },
-    {
-      "source": "/:locale/guides/publishing-napi-modules",
-      "destination": "/:locale/learn/modules/publishing-node-api-modules"
-    },
-    {
-      "source": "/:locale/guides/simple-profiling",
-      "destination": "/:locale/learn/getting-started/profiling"
-    },
-    {
-      "source": "/:locale/guides/diagnostics-flamegraph",
-      "destination": "/:locale/learn/diagnostics/flame-graphs"
-    },
-    {
-      "source": "/:locale/guides/diagnostics",
-      "destination": "/:locale/learn/diagnostics/user-journey"
-    },
-    {
-      "source": "/:locale/guides/debugging-getting-started",
-      "destination": "/:locale/learn/getting-started/debugging"
-    },
-    {
-      "source": "/:locale/guides/diagnostics/:path*",
-      "destination": "/:locale/learn/diagnostics/:path*"
-    },
-    {
-      "source": "/:locale/guides/abi-stability",
-      "destination": "/:locale/learn/modules/abi-stability"
-    },
-    {
-      "source": "/:locale/guides/security",
-      "destination": "/:locale/learn/getting-started/security-best-practices"
-    },
-    {
-      "source": "/:locale/guides/event-loop-timers-and-nexttick",
-      "destination": "/:locale/learn/asynchronous-work/event-loop-timers-and-nexttick"
-    },
-    {
-      "source": "/:locale/guides/dont-block-the-event-loop",
-      "destination": "/:locale/learn/asynchronous-work/dont-block-the-event-loop"
-    },
-    {
       "source": "/:locale/get-involved",
       "destination": "/:locale/about/get-involved"
     },
@@ -265,36 +189,80 @@
       "destination": "/:locale/about/get-involved/:path*"
     },
     {
-      "source": "/learn",
-      "destination": "/en/learn"
-    },
-    {
-      "source": "/:locale/learn",
-      "destination": "/:locale/learn/getting-started/introduction-to-nodejs"
+      "source": "/:locale/about/get-involved/contribute",
+      "destination": "https://github.com/nodejs/node/blob/main/CONTRIBUTING.md"
     },
     {
       "source": "/:locale/about/releases",
       "destination": "/:locale/about/previous-releases"
     },
     {
+      "source": "/:locale/eol",
+      "destination": "/:locale/about/eol"
+    },
+    {
       "source": "/:locale/blog/weekly-updates/:path*",
       "destination": "/:locale/blog/weekly/:path*"
     },
     {
-      "source": "/:locale/download",
-      "destination": "/:locale/download/package-manager"
-    },
-    {
       "source": "/download/package-manager",
-      "destination": "/en/download/package-manager"
+      "destination": "/en/download"
     },
     {
-      "source": "/:locale/download/current",
-      "destination": "/:locale/download/package-manager/current"
+      "source": "/:locale/download/package-manager",
+      "destination": "/:locale/download"
     },
     {
-      "source": "/:locale/learn/getting-started/nodejs-with-typescript",
-      "destination": "/:locale/learn/typescript/introduction"
+      "source": "/:locale/download/package-manager/current",
+      "destination": "/:locale/download/current"
+    },
+    {
+      "source": "/:locale/download/prebuilt-binaries",
+      "destination": "/:locale/download"
+    },
+    {
+      "source": "/:locale/download/prebuilt-binaries/current",
+      "destination": "/:locale/download/current"
+    },
+    {
+      "source": "/:locale/download/prebuilt-installer",
+      "destination": "/:locale/download"
+    },
+    {
+      "source": "/:locale/download/source-code/current",
+      "destination": "/:locale/download/current"
+    },
+    {
+      "source": "/:locale/download/source-code/current",
+      "destination": "/:locale/download/current"
+    },
+    {
+      "source": "/discord",
+      "destination": "https://discord.gg/nodejs"
+    },
+    {
+      "source": "/:locale/discord",
+      "destination": "https://discord.gg/nodejs"
+    },
+    {
+      "source": "/:locale/esp/herodevs",
+      "destination": "https://www.herodevs.com/support/node-nes?utm_source=NodeJS+&utm_medium=Link&utm_campaign=Nodejs_eol_support"
+    },
+    {
+      "source": "/:locale/download/package-manager/all",
+      "destination": "/:locale/download/archive/current"
+    },
+    {
+      "source": "/:locale/blog/migrations/axios-to-fetch",
+      "destination": "/learn/userland-migrations/axios-to-whatwg-fetch"
+    },
+    {
+      "source": "/:locale/blog/migrations/chalk-to-styletext",
+      "destination": "/learn/userland-migrations/chalk-to-util-styletext"
+    },
+    {
+      "source": "/code-and-learn-2026",
+      "destination": "https://code-and-learn.nodejs.harperfabric.com/"
     }
   ],
   "internal": []

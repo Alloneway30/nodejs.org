@@ -1,40 +1,59 @@
-import type { ReactNode } from 'react';
+import type { DownloadSnippet } from '#site/types/download';
+import type { NodeRelease } from '#site/types/releases';
+import type { OperatingSystem, Platform } from '#site/types/userAgent';
 
-import type { NodeRelease } from '@/types/releases';
-import type { UserOS } from '@/types/userOS';
+export type InstallationMethod =
+  | 'NVM'
+  | 'FNM'
+  | 'BREW'
+  | 'DOCKER'
+  | 'CHOCO'
+  | 'N'
+  | 'ASDF'
+  | 'VP'
+  | 'ZEROINSTALL';
+export type PackageManager = 'NPM' | 'YARN' | 'PNPM';
 
-export type PackageManager = 'NVM' | 'FNM' | 'BREW' | 'DOCKER' | 'CHOCO';
-
-export interface ReleaseState {
-  os: UserOS;
-  release: NodeRelease;
-  releases: Array<NodeRelease>;
-  bitness: string | number;
-  platform: PackageManager;
-  modalOpen: boolean;
-}
+// Items with a pipe/default value mean that they are auto inferred
+// during runtime and do not have necessarily a consistent initial value
+export type ReleaseState = {
+  version: string;
+  os: OperatingSystem | 'LOADING';
+  platform: Platform | '';
+  installMethod: InstallationMethod | '';
+  packageManager: PackageManager;
+};
 
 export type ReleaseAction =
-  | { type: 'SET_OS'; payload: UserOS }
   | { type: 'SET_VERSION'; payload: string }
-  | { type: 'SET_BITNESS'; payload: string | number }
-  | { type: 'SET_PLATFORM'; payload: PackageManager }
-  | { type: 'SET_MODAL_OPEN'; payload: boolean };
+  | { type: 'SET_OS'; payload: OperatingSystem }
+  | { type: 'SET_PLATFORM'; payload: Platform }
+  | { type: 'SET_INSTALL_METHOD'; payload: InstallationMethod }
+  | { type: 'SET_MANAGER'; payload: PackageManager };
 
-export interface ReleaseDispatchActions {
+export type ReleaseDispatchActions = {
   setVersion: (version: string) => void;
-  setOS: (os: UserOS) => void;
-  setBitness: (bitness: string | number) => void;
-  setPlatform: (platform: PackageManager) => void;
-  setModalOpen: (open: boolean) => void;
-}
+  setOS: (os: OperatingSystem) => void;
+  setPlatform: (bitness: Platform) => void;
+  setInstallMethod: (installMethod: InstallationMethod) => void;
+  setPackageManager: (packageManager: PackageManager) => void;
+};
 
-export interface ReleaseContextType
-  extends ReleaseState,
-    ReleaseDispatchActions {}
-
-export interface ReleaseProviderProps {
-  children: ReactNode;
+export type ReleasesContextType = {
   releases: Array<NodeRelease>;
-  initialRelease: NodeRelease;
-}
+  snippets: Array<DownloadSnippet>;
+};
+
+export type ReleaseContextType = {
+  release: NodeRelease;
+} & ReleaseState &
+  ReleaseDispatchActions;
+
+export type ReleasesProviderProps = {
+  releases: Array<NodeRelease>;
+  snippets: Array<DownloadSnippet>;
+};
+
+export type ReleaseProviderProps = {
+  initialRelease?: NodeRelease;
+};

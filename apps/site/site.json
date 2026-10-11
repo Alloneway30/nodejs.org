@@ -1,6 +1,6 @@
 {
   "title": "Node.js",
-  "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+  "description": "Node.js® is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts.",
   "favicon": "/static/images/favicons/favicon.png",
   "accentColor": "#333",
   "twitter": {
@@ -28,21 +28,21 @@
   ],
   "websiteBanners": {
     "index": {
-      "startDate": "2024-09-04T00:00:00.000Z",
-      "endDate": "2024-09-30T00:00:00.000Z",
-      "text": "Save 60% on Node.js Training and Certification through September 30 with code ROCKET60",
-      "link": "https://training.linuxfoundation.org/openjs-sept-24-promo/",
-      "type": "default"
+      "startDate": "2026-07-29T00:00:00.000Z",
+      "endDate": "2026-08-05T00:00:00.000Z",
+      "text": "July 2026 security releases are available",
+      "link": "https://nodejs.org/en/blog/vulnerability/july-2026-security-releases",
+      "type": "warning"
     }
   },
   "websiteBadges": {
     "index": {
-      "startDate": "2024-09-01T00:00:00.000Z",
-      "endDate": "2024-10-01T00:00:00.000Z",
+      "startDate": "2026-08-17T00:00:00.000Z",
+      "endDate": "2026-09-18T00:00:00.000Z",
       "kind": "default",
-      "title": "Discover",
-      "text": "TypeScript in Node.js",
-      "link": "https://nodejs.org/en/learn/typescript/introduction/"
+      "title": "Be Heard",
+      "text": "Take the Node.js User Survey 2026",
+      "link": "https://linuxfoundation.surveymonkey.com/r/nodejs-users-2026"
     }
   }
 }

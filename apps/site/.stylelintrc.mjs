@@ -4,12 +4,14 @@ const CUSTOM_AT_RULES = [
   'apply',
   'layer',
   'responsive',
+  'reference',
+  'utility',
+  'theme',
+  'custom-variant',
   'screen',
+  'source',
   'tailwind',
   'variants',
-  // PostCSS-specific at-rules
-  'define-mixin',
-  'mixin',
 ];
 
 // Enforces certain selectors to be only in camelCase notation
@@ -21,7 +23,11 @@ const ONLY_ALLOW_CAMEL_CASE_SELECTORS = [
 
 export default {
   extends: ['stylelint-config-standard'],
-  plugins: ['stylelint-order', 'stylelint-selector-bem-pattern'],
+  plugins: [
+    'stylelint-order',
+    'stylelint-selector-bem-pattern',
+    '@node-core/ui-components/src/stylelint/one-utility-class-per-line.mjs',
+  ],
   rules: {
     // Enforces Element Class Names to be camelCase
     'selector-class-pattern': ONLY_ALLOW_CAMEL_CASE_SELECTORS,
@@ -41,5 +47,8 @@ export default {
     'media-feature-range-notation': 'prefix',
     // Adopts the import notation from `postcss-import`
     'import-notation': 'string',
+    // Allow the `@apply` at rule as its part of Tailwind
+    'at-rule-no-deprecated': [true, { ignoreAtRules: CUSTOM_AT_RULES }],
+    'nodejs/one-utility-class-per-line': true,
   },
 };
